@@ -1,0 +1,5 @@
+node_modules/
+server.log
+server-error.log
+data/*.sqlite
+data/*.sqlite-*

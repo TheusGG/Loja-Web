@@ -1,0 +1,14 @@
+{
+  "name": "lojinha-web",
+  "version": "1.0.0",
+  "description": "Versao web da Lojinha com Node.js e SQLite.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check app.js"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

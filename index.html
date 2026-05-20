@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A Lojinha</title>
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main id="app" class="app-shell">
+      <section id="login-screen" class="login-screen">
+        <div class="brand-panel">
+          <svg class="brand-cart hero-cart" viewBox="0 0 120 100" role="img" aria-label="Carrinho A Lojinha">
+            <path d="M8 18c0-6 5-10 11-8l23 7h60c8 0 14 7 12 15l-9 39c-2 7-8 12-15 12H43c-7 0-13-5-15-12L18 35 7 31C1 29-2 23 0 18c1-3 4-5 8 0Z" fill="#c0008b"/>
+            <path d="M48 33v8m34-8v8" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+            <path d="M48 58c11 10 29 10 40 0" stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none"/>
+            <path d="M39 91h57" stroke="#c0008b" stroke-width="8" stroke-linecap="round"/>
+            <circle cx="48" cy="93" r="7" fill="#c0008b"/>
+            <circle cx="88" cy="93" r="7" fill="#c0008b"/>
+          </svg>
+          <h1>A Lojinha</h1>
+          <p>Controle de produtos, usuários e vendas em uma interface web responsiva.</p>
+        </div>
+        <form id="login-form" class="auth-panel">
+          <div>
+            <p class="eyebrow">Acesso</p>
+            <h2>Entrar no sistema</h2>
+          </div>
+          <label>
+            Login
+            <input id="login-user" name="login" autocomplete="username" required>
+          </label>
+          <label>
+            Senha
+            <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+          </label>
+          <button class="primary-action" type="submit">
+            <span class="button-icon">→</span>
+            Entrar
+          </button>
+          <p class="hint">Demo local: adm / adm123 · supervisor / supervisor123</p>
+          <p id="login-error" class="form-error" role="alert"></p>
+        </form>
+      </section>
+
+      <section id="system-screen" class="system-screen hidden">
+        <aside class="sidebar">
+          <div class="sidebar-brand">
+            <svg class="brand-cart sidebar-cart" viewBox="0 0 120 100" role="img" aria-label="Carrinho A Lojinha">
+              <path d="M8 18c0-6 5-10 11-8l23 7h60c8 0 14 7 12 15l-9 39c-2 7-8 12-15 12H43c-7 0-13-5-15-12L18 35 7 31C1 29-2 23 0 18c1-3 4-5 8 0Z" fill="#c0008b"/>
+              <path d="M48 33v8m34-8v8" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+              <path d="M48 58c11 10 29 10 40 0" stroke="#fff" stroke-width="6" stroke-linecap="round" fill="none"/>
+              <path d="M39 91h57" stroke="#c0008b" stroke-width="8" stroke-linecap="round"/>
+              <circle cx="48" cy="93" r="7" fill="#c0008b"/>
+              <circle cx="88" cy="93" r="7" fill="#c0008b"/>
+            </svg>
+            <div>
+              <strong>A Lojinha</strong>
+              <span id="user-role">Cargo</span>
+            </div>
+          </div>
+          <nav class="nav-list" aria-label="Principal">
+            <button class="nav-item active" data-view="dashboard">Painel</button>
+            <button class="nav-item" data-view="products">Produtos</button>
+            <button class="nav-item" data-view="sales">Vendas</button>
+            <button class="nav-item" data-view="timeclock">Ponto</button>
+            <button class="nav-item" data-view="history">Histórico</button>
+            <button class="nav-item admin-only" data-view="reports">Relatórios</button>
+            <button class="nav-item manager-only" data-view="users">Usuários</button>
+          </nav>
+          <button id="logout-button" class="ghost-action" type="button">Sair</button>
+        </aside>
+
+        <section class="workspace">
+          <header class="topbar">
+            <div>
+              <p class="eyebrow">Operação</p>
+              <h2 id="view-title">Painel</h2>
+            </div>
+            <div class="user-chip">
+              <span id="current-user">Usuário</span>
+            </div>
+          </header>
+
+          <section id="dashboard" class="view active-view">
+            <div class="metric-grid">
+              <article class="metric">
+                <span>Produtos</span>
+                <strong id="metric-products">0</strong>
+              </article>
+              <article class="metric">
+                <span>Estoque total</span>
+                <strong id="metric-stock">0</strong>
+              </article>
+              <article class="metric">
+                <span>Vendas</span>
+                <strong id="metric-sales">0</strong>
+              </article>
+              <article class="metric">
+                <span>Faturamento</span>
+                <strong id="metric-revenue">R$ 0,00</strong>
+              </article>
+            </div>
+            <div class="content-grid">
+              <section class="panel">
+                <div class="panel-heading">
+                  <h3>Estoque crítico</h3>
+                </div>
+                <div id="low-stock-list" class="stack-list"></div>
+              </section>
+              <section class="panel">
+                <div class="panel-heading">
+                  <h3>Últimas vendas</h3>
+                </div>
+                <div id="recent-sales-list" class="stack-list"></div>
+              </section>
+            </div>
+          </section>
+
+          <section id="products" class="view">
+            <div class="split-layout">
+              <form id="product-form" class="panel data-form supervisor-panel">
+                <div class="panel-heading">
+                  <h3>Cadastro de produto</h3>
+                  <button id="clear-product" class="icon-action" type="button" title="Limpar">×</button>
+                </div>
+                <label>Código <input id="product-code" required maxlength="10"></label>
+                <label>Produto <input id="product-name" required maxlength="40"></label>
+                <label>Categoria
+                  <select id="product-category">
+                    <option>Higiene</option>
+                    <option>Utensílio</option>
+                    <option>Maquiagem</option>
+                    <option>Alimento</option>
+                  </select>
+                </label>
+                <div class="two-cols">
+                  <label>Quantidade <input id="product-quantity" type="number" min="0" step="1" required></label>
+                  <label>Estoque mínimo <input id="product-min-stock" type="number" min="0" step="1" value="5" required></label>
+                </div>
+                <div class="two-cols">
+                  <label>Compra <input id="product-cost" type="number" min="0" step="0.01" required></label>
+                  <label>Venda <input id="product-price" type="number" min="0" step="0.01" required></label>
+                </div>
+                <button class="primary-action" type="submit">Salvar produto</button>
+                <p id="product-message" class="form-message"></p>
+              </form>
+              <section class="panel table-panel">
+                <div class="panel-heading">
+                  <h3>Produtos</h3>
+                  <input id="product-search" class="search-input" placeholder="Buscar por código ou nome">
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Código</th>
+                        <th>Produto</th>
+                        <th>Categoria</th>
+                        <th>Qtd.</th>
+                        <th>Mín.</th>
+                        <th>Venda</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="products-table"></tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+          </section>
+
+          <section id="sales" class="view">
+            <div class="sales-layout">
+              <section class="panel sale-entry">
+                <div class="panel-heading">
+                  <h3>Nova venda</h3>
+                </div>
+                <div class="sale-row">
+                  <label>Código ou nome <input id="sale-code" list="product-suggestions"></label>
+                  <button id="find-product" class="secondary-action" type="button">Pesquisar</button>
+                </div>
+                <datalist id="product-suggestions"></datalist>
+                <label>Produto <input id="sale-name" disabled></label>
+                <div class="two-cols">
+                  <label>Qtd. <input id="sale-quantity" type="number" min="1" step="1" value="1"></label>
+                  <label>Unitário <input id="sale-price" type="number" disabled></label>
+                </div>
+                <label>Desconto do item <input id="sale-item-discount" type="number" min="0" step="0.01" value="0"></label>
+                <div class="sale-total">
+                  <span>Total do item</span>
+                  <strong id="sale-item-total">R$ 0,00</strong>
+                </div>
+                <button id="add-sale-item" class="primary-action" type="button">Adicionar</button>
+                <p id="sale-message" class="form-message"></p>
+              </section>
+              <section class="panel table-panel">
+                <div class="panel-heading">
+                  <h3>Carrinho</h3>
+                  <div class="inline-actions">
+                    <button id="clear-cart" class="secondary-action compact" type="button">Limpar</button>
+                    <button id="finish-sale" class="primary-action compact" type="button">Registrar venda</button>
+                  </div>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Código</th>
+                        <th>Produto</th>
+                        <th>Qtd.</th>
+                        <th>Unitário</th>
+                        <th>Desc.</th>
+                        <th>Total</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="cart-table"></tbody>
+                  </table>
+                </div>
+                <div class="checkout-fields">
+                  <label>Desconto da venda <input id="sale-discount" type="number" min="0" step="0.01" value="0"></label>
+                </div>
+                <div class="subtotal-bar">
+                  <span>Subtotal</span>
+                  <strong id="cart-subtotal">R$ 0,00</strong>
+                </div>
+                <div class="subtotal-bar final-total">
+                  <span>Total</span>
+                  <strong id="cart-total">R$ 0,00</strong>
+                </div>
+              </section>
+            </div>
+          </section>
+
+          <section id="history" class="view">
+            <section class="panel table-panel">
+              <div class="panel-heading">
+                <h3>Histórico de vendas</h3>
+              </div>
+              <div class="filter-grid">
+                <label>Início <input id="history-start" type="date"></label>
+                <label>Fim <input id="history-end" type="date"></label>
+                <label>Operador <input id="history-operator" placeholder="Login"></label>
+                <label>Produto <input id="history-product" placeholder="Código ou nome"></label>
+                <button id="filter-history" class="secondary-action" type="button">Filtrar</button>
+                <button id="clear-history-filter" class="ghost-light-action" type="button">Limpar</button>
+              </div>
+              <div id="sales-history-list" class="sales-history-list"></div>
+            </section>
+          </section>
+
+          <section id="reports" class="view">
+            <div class="metric-grid">
+              <article class="metric">
+                <span>Vendas</span>
+                <strong id="report-sales">0</strong>
+              </article>
+              <article class="metric">
+                <span>Faturamento</span>
+                <strong id="report-revenue">R$ 0,00</strong>
+              </article>
+              <article class="metric">
+                <span>Lucro estimado</span>
+                <strong id="report-profit">R$ 0,00</strong>
+              </article>
+              <article class="metric">
+                <span>Descontos</span>
+                <strong id="report-discount">R$ 0,00</strong>
+              </article>
+            </div>
+            <div class="content-grid">
+              <section class="panel">
+                <div class="panel-heading">
+                  <h3>Faturamento por dia</h3>
+                </div>
+                <div id="report-days" class="stack-list"></div>
+              </section>
+              <section class="panel">
+                <div class="panel-heading">
+                  <h3>Produtos mais vendidos</h3>
+                </div>
+                <div id="report-products" class="stack-list"></div>
+              </section>
+            </div>
+          </section>
+
+          <section id="timeclock" class="view">
+            <div class="content-grid">
+              <section class="panel sale-entry">
+                <div class="panel-heading">
+                  <h3>Bater ponto</h3>
+                </div>
+                <div class="timeclock-status">
+                  <span>Último registro</span>
+                  <strong id="timeclock-last">Nenhum registro</strong>
+                </div>
+                <div class="inline-actions">
+                  <button id="clock-in" class="primary-action" type="button">Entrada</button>
+                  <button id="clock-out" class="secondary-action" type="button">Saída</button>
+                </div>
+                <p id="timeclock-message" class="form-message"></p>
+              </section>
+              <section class="panel table-panel">
+                <div class="panel-heading">
+                  <h3>Histórico de ponto</h3>
+                </div>
+                <div class="filter-grid manager-only">
+                  <label>Início <input id="clock-start" type="date"></label>
+                  <label>Fim <input id="clock-end" type="date"></label>
+                  <label>Login <input id="clock-login" placeholder="Login do usuário"></label>
+                  <button id="filter-clock" class="secondary-action" type="button">Filtrar</button>
+                  <button id="clear-clock-filter" class="ghost-light-action" type="button">Limpar</button>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Data</th>
+                        <th>Usuário</th>
+                        <th>Cargo</th>
+                        <th>Tipo</th>
+                      </tr>
+                    </thead>
+                    <tbody id="timeclock-table"></tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+          </section>
+
+          <section id="users" class="view">
+            <div class="split-layout">
+              <form id="user-form" class="panel data-form admin-only">
+                <div class="panel-heading">
+                  <h3>Cadastro de usuário</h3>
+                  <button id="clear-user" class="icon-action" type="button" title="Limpar">×</button>
+                </div>
+                <label>CPF <input id="user-cpf" required maxlength="14" placeholder="000.000.000-00"></label>
+                <label>Nome <input id="user-name" required maxlength="50"></label>
+                <label>Login <input id="user-login" required maxlength="50"></label>
+                <label>Senha <input id="user-password" type="password" required maxlength="72"></label>
+                <label>Email <input id="user-email" type="email" maxlength="80"></label>
+                <label>Telefone <input id="user-phone" maxlength="20"></label>
+                <label>Cargo
+                  <select id="user-cargo">
+                    <option>Adm</option>
+                    <option>Supervisor</option>
+                    <option>Atendente balcão</option>
+                    <option>Limpeza</option>
+                    <option>Açougue</option>
+                    <option>Repositor</option>
+                  </select>
+                </label>
+                <button class="primary-action" type="submit">Salvar usuário</button>
+                <p id="user-message" class="form-message"></p>
+              </form>
+              <section class="panel table-panel">
+                <div class="panel-heading">
+                  <h3>Usuários</h3>
+                </div>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Nome</th>
+                        <th>Login</th>
+                        <th>Cargo</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="users-table"></tbody>
+                  </table>
+                </div>
+              </section>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 220" role="img" aria-labelledby="title desc">
+  <title id="title">A Lojinha</title>
+  <desc id="desc">Logo A Lojinha com carrinho de compras magenta.</desc>
+  <g fill="none" fill-rule="evenodd">
+    <path fill="#050505" d="M10 162h30l11-27h62l11 27h31L95 24H70L10 162Zm51-52 21-52 21 52H61Zm112 52h30V24h-30v138Zm91 3c33 0 56-23 56-54s-23-54-56-54-56 23-56 54 23 54 56 54Zm0-27c-16 0-27-11-27-27s11-27 27-27 27 11 27 27-11 27-27 27Zm76 24h30V59h-30v103Zm15-116c10 0 18-7 18-17s-8-17-18-17-18 7-18 17 8 17 18 17Zm45 116h30v-56c0-15 8-23 21-23 12 0 19 7 19 21v58h30V99c0-28-16-42-39-42-14 0-26 5-34 15V59h-27v103Zm129 0h30V24h-30v138Zm73 0h30V59h-30v103Zm15-116c10 0 18-7 18-17s-8-17-18-17-18 7-18 17 8 17 18 17Zm90 119c31 0 53-21 53-52 0-32-22-56-53-56-14 0-26 5-35 15V59h-27v139h30v-48c8 10 19 15 32 15Zm-6-27c-16 0-28-11-28-27s12-27 28-27 28 11 28 27-12 27-28 27Z"/>
+    <g transform="translate(500 20) rotate(18)">
+      <path fill="#C0008B" d="M10 17c0-7 6-12 13-10l34 9h112c11 0 19 10 17 21l-14 67c-2 9-10 16-19 16H64c-9 0-17-6-19-15L33 49 14 44C6 42 2 35 4 28c1-5 3-9 6-11Z"/>
+      <path stroke="#FFF" stroke-linecap="round" stroke-width="12" d="M75 45v11m59-11v11"/>
+      <path stroke="#FFF" stroke-linecap="round" stroke-width="11" d="M73 83c17 18 48 18 65 0"/>
+      <path stroke="#C0008B" stroke-linecap="round" stroke-width="14" d="M64 142h87"/>
+      <circle cx="76" cy="161" r="13" fill="#C0008B"/>
+      <circle cx="144" cy="161" r="13" fill="#C0008B"/>
+    </g>
+  </g>
+</svg>
